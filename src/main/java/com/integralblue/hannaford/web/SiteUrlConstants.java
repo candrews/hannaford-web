@@ -10,4 +10,5 @@ public interface SiteUrlConstants {
 	public static final String SEARCH="/catalog/search.cmd";
 	public static final String BROWSE_PRODUCTS="/catalog/browse_products.cmd";
 	public static final String CONTENT="/content.jsp";
+	public static final String CAMERA="/camera.jsp";
 }

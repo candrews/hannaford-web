@@ -116,7 +116,7 @@ public class ProxyController {
         return "content";
     }
     
-    @RequestMapping(method=RequestMethod.GET, value={"/camera.jsp"})
+    @RequestMapping(method=RequestMethod.GET, value={SiteUrlConstants.CAMERA})
     public String camera(HttpServletRequest request, Model model) {
     	model.addAttribute("breadcrumbs",ImmutableList.<Breadcrumb>builder()
     			.add(Breadcrumb.builder()

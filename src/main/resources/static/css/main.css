@@ -21,3 +21,6 @@
 html.native-app #primary-nav {
 	display: none;
 }
+
+/* https://github.com/Dogfalo/materialize/issues/3161 */
+.nav-wrapper, .nav-wrapper form, .nav-wrapper form .input-field{ height: 100%; }

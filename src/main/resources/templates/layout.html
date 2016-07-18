@@ -39,21 +39,25 @@
   <body>
   	<body>
   <nav id="primary-nav" class="light-red lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><img src="/assets/hf/assets/images/common/logo.png" /></a>
+    <div class="nav-wrapper container">
       <ul class="right hide-on-med-and-down">
       	<!-- top navigation -->
+      	<li>
+      		<a href="#"><img src="/assets/hf/assets/images/common/logo.png" /></a>
+      	</li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).STORE_LOCATOR}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).STORE_LOCATOR}">Stores</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).WEEKLY_FLYER}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).WEEKLY_FLYER}">Weekly Flyer</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).GIFT_CARDS}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).GIFT_CARDS}">Gift Cards</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).TO_GO}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).TO_GO}">Hannaford To Go</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).LOGIN}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).LOGIN}">Sign in / Register</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CART}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CART}"><img src="/assets/hf/assets/images/buttons/cart.png" />Cart (<span class="badge">14</span>)</a></li>
+        <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}"><i class="left material-icons">camera</i></a></li>
         <li th:classappend="${#strings.startsWith(#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString,T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH)}?active">
 	      <form th:action="${T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH}" class="right" method="GET">
 	      	<div class="input-field col s6">
-	          <i class="material-icons prefix">search</i>
-	          <input id="keyword" name="keyword" type="search" class="validate" />
-	          <label for="keyword">Search</label>
+	          <input id="keyword" name="keyword" type="search" required>
+	          <label for="keyword"><i class="material-icons">search</i></label>
+	          <i class="material-icons">close</i>
 	        </div>
 	      </form>
     	</li>
@@ -61,18 +65,23 @@
 
       <ul id="nav-mobile" class="side-nav">
       	<!-- left side navigation -->
+      	<li>
+      		<a href="#"><img src="/assets/hf/assets/images/common/logo.png" /></a>
+      	</li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).STORE_LOCATOR}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).STORE_LOCATOR}">Stores</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).WEEKLY_FLYER}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).WEEKLY_FLYER}">Weekly Flyer</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).GIFT_CARDS}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).GIFT_CARDS}">Gift Cards</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).TO_GO}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).TO_GO}">Hannaford To Go</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).LOGIN}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).LOGIN}">Sign in / Register</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CART}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CART}">Cart (<span class="badge">14</span>)</a></li>
-        <li th:classappend="${#strings.startsWith(#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString,T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH)}?active">
+        <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}"><i class="left material-icons">camera</i></a></li>
+	    <li th:classappend="${#strings.startsWith(#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString,T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH)}?active">
 	      <form th:action="${T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH}" class="right" method="GET">
 	      	<div class="input-field col s6">
 	          <i class="material-icons prefix">search</i>
 	          <input id="keyword" name="keyword" type="search" class="validate">
 	          <label for="keyword">Search</label>
+	          <i class="material-icons">close</i>
 	        </div>
 	      </form>
     	</li>
