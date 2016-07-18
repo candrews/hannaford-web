@@ -10,9 +10,12 @@
 		}
 		Materialize.updateTextFields();
 		if(quaggaRunning){
+			Quagga.stop();
 			quaggaRunning=false;
 		}
 		if($("#barcode-scanner-viewport").length){
+			$(".camera-instructions").show();
+			  $(".camera-error").hide();
 			$.ajax({
 				  url: "https://serratus.github.io/quaggaJS/examples/js/quagga.min.js",
 				  dataType: "script",
@@ -30,7 +33,9 @@
 					      readers : ["ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader"]
 					    }
 					  }, function(err) {
+					      $(".camera-instructions").hide();
 					      if (err) {
+							  $(".camera-error").show();
 					          console.log(err);
 					          return
 					      }
@@ -39,7 +44,6 @@
 					      quaggaRunning = true;
 					  });
 					Quagga.onDetected(function(data){
-						Quagga.stop();
 						Turbolinks.visit("/catalog/search.cmd?keyword=" + data.codeResult.code);
 					});
 				});

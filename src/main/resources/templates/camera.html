@@ -3,12 +3,14 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout">
 <head>
-    <title th:text="Camera"></title>
+    <title>Camera Barcode Scanner</title>
 </head>
 <body>
 	<section layout:fragment="content">
-		<h1 th:text="Camera"></h1>
-		<div id="barcode-scanner-viewport"></div>
+		<div class="camera-instructions">When prompted, provide access to your camera to use it for barcode scanning.</div>
+		<div class="camera-error">Sorry, unable to use your camera. You either don't have a camera, you didn't provide access to it when prompted, or your browser doesn't support accessing it.</div>
+		<div id="barcode-scanner-viewport">
+		</div>
     </section>
 </body>
 </html>
