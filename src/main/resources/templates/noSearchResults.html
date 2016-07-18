@@ -7,7 +7,7 @@
 </head>
 <body>
 	<section layout:fragment="content">
-		<h1>No Search Results</h1>
+		<h1>No Search Results for &quot;<span th:text="${#httpServletRequest.getParameter('keyword')}"></span>&quot;</h1>
     </section>
 </body>
 </html>
