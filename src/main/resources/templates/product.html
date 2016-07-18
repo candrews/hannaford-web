@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+    <title th:text="${productPage.product.name}"></title>
+</head>
+<body>
+	<section layout:fragment="content">
+    	<div th:text="${productPage.product.overline}"></div>
+    	<div th:text="${productPage.product.name}"></div>
+    	<div th:text="${'$' + #numbers.formatDecimal(productPage.product.price, 0, 'COMMA', 2, 'POINT')}"></div>
+    	<div th:text="${productPage.product.unitPrice}"></div>
+    	<img onerror="this.src=&quot;/assets/hf/assets/images/common/noimage_300.jpg&quot;; this.width=&quot;300&quot;;" th:src="${productPage.product.image}" />
+    </section>
+</body>
+</html>

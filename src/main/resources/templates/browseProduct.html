@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+    <title>Browse Products</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<h1>Departments</h1>
+		<div class="row section">
+			<ul th:each="outerCategory : ${browseProductPage.categories}" class="department-collection collection with-header col s12 m6 l3">
+				<li class="collection-header"><h4 th:text="${outerCategory.key}"></h4></li>
+				<li class="collection-item" th:each="category : ${outerCategory.value}">
+					<a th:text="${category.name}" th:href="${category.href}"><i class="material-icons">chevron_right</i></a>
+				</li>
+			</ul>
+		</div>
+    </section>
+</body>
+</html>

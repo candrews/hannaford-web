@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+    <title>Search</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<h1>Search: <span th:text="${searchPage.keyword}"></span></h1>
+		<table class="striped">
+			<thead>
+				<tr>
+					<th colspan="2">Product</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="searchProduct : ${searchPage.searchProducts}">
+					<td><img onerror="this.src=&quot;/assets/hf/assets/images/common/noimage.gif&quot;; this.width=&quot;72&quot;;" th:src="${searchProduct.image}" /></td>
+					<td>
+						<div><a th:href="${searchProduct.href}" th:text="${searchProduct.name}"></a></div>
+					</td>
+					<td>
+						<span th:text="${'$' + #numbers.formatDecimal(searchProduct.price, 0, 'COMMA', 2, 'POINT')}"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+    </section>
+</body>
+</html>
