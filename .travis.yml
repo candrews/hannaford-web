@@ -16,3 +16,6 @@ deploy:
   on:
     repo: candrews/hannaford-web
     branch: master
+cache:
+  directories:
+  - $HOME/.m2
