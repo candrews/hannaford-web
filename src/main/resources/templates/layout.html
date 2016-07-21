@@ -65,17 +65,34 @@
 
       <ul id="nav-mobile" class="side-nav">
       	<!-- left side navigation -->
-      	<li>
-      		<a href="#"><img src="/assets/hf/assets/images/common/logo.png" /></a>
+      	<li class="native-app-exclude">
+      		<img src="/assets/hf/assets/images/common/logo.png" />
       	</li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).STORE_LOCATOR}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).STORE_LOCATOR}">Stores</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).WEEKLY_FLYER}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).WEEKLY_FLYER}">Weekly Flyer</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).GIFT_CARDS}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).GIFT_CARDS}">Gift Cards</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).TO_GO}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).TO_GO}">Hannaford To Go</a></li>
         <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).LOGIN}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).LOGIN}">Sign in / Register</a></li>
-        <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CART}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CART}">Cart (<span class="badge">14</span>)</a></li>
-        <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}"><i class="left material-icons">camera</i></a></li>
-	    <li th:classappend="${#strings.startsWith(#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString,T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH)}?active">
+        <li th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CART}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CART}"><img src="https://materialdesignicons.com/api/download/icon/svg/F290ABB0-4CD2-4C45-B543-E3AEBA1FE358" /> Cart (<span class="badge">14</span>)</a></li>
+        <li><a href="/catalog/browse_products.cmd?viewSecId=28546">Shop by Department</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a class="collapsible-header">Customer Service</a>
+              <div class="collapsible-body">
+                <ul>
+                  <li><a href="/content.jsp?pageName=ContactUs&leftNavArea=AboutLeftNav">Contact Us</a></li>
+                  <li><a href="/content.jsp?pageName=FAQ&leftNavArea=AboutLeftNav">FAQs</a></li>
+                  <li><a href="/custserv/custserv.jsp?pageName=Privacy">Privacy Policy</a></li>
+                  <li><a href="/content.jsp?pageName=videos&leftNavArea=AboutLeftNav">Site Tutorials</a></li>
+                  <li><a href="https://secure.ethicspoint.com/domain/media/en/gui/7392/index.html">ISHARE Network</a></li>
+                  <li><a href="/custserv/sitemap.jsp">Sitemap</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li class="native-app-exclude" th:classappend="${#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString == T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}?active"><a th:href="${T(com.integralblue.hannaford.web.SiteUrlConstants).CAMERA}"><i class="left material-icons">camera</i></a></li>
+	    <li class="native-app-exclude" th:classappend="${#strings.startsWith(#httpServletRequest.requestURI + '?' + #httpServletRequest.queryString,T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH)}?active">
 	      <form th:action="${T(com.integralblue.hannaford.web.SiteUrlConstants).SEARCH}" class="right" method="GET">
 	      	<div class="input-field col s6">
 	          <i class="material-icons prefix">search</i>

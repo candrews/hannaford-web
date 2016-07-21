@@ -48,5 +48,36 @@
 					});
 				});
 		}
+		var getNavigationItemForLi = function($li){
+			if($li.find("> ul.collapsible").length==1){
+				var submenu = {children: []};
+				var $header = $($li.find("> ul.collapsible .collapsible-header")[0]);
+				submenu.text = $header.text();
+				var img = $header.find("img");
+				if(img.length==1) submenu.imgSrc = img.attr("src");
+				$li.find("> ul.collapsible > li > .collapsible-body > ul > li").each(function(){
+					submenu.children.push(getNavigationItemForLi($(this)));
+				});
+				return submenu;
+			}else{
+				var item = {};
+				item.text = $li.text();
+				var img = $li.find("img");
+				if(img.length==1) item.imgSrc = img.attr("src");
+				var a = $li.find("a");
+				if(a.length == 1) item.href = a.attr("href");
+				return item;
+			}
+		}
+		// used by the native apps to get the left navigation so they can render it native
+		window.getNavigationObject = function(){
+			var ret = [];
+			$("ul#nav-mobile > li:not(.native-app-exclude)").each(function(){
+				var $li=$(this);
+				ret.push(getNavigationItemForLi($li));
+			});
+			return ret;
+		};
 	});
 })(jQuery); // end of jQuery name space
+
