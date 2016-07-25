@@ -1,0 +1,14 @@
+CACHE MANIFEST
+/css/main.css
+/js/main.js
+/js/turbo-react.min.js
+/js/turbolinks.min.js
+/offline.html
+
+NETWORK:
+*
+
+#FALLBACK:
+#/product/ /offline.html
+#/catalog/ /offline.html
+#/content.jsp /offline.html

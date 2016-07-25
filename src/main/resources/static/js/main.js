@@ -78,6 +78,20 @@
 			});
 			return ret;
 		};
+		
+		$("a.offlineReload").attr("href", location.hash?location.hash.substr(1):location.href);
 	});
+
+	function addAppCacheIframe(){
+		var iframe = document.createElement('IFRAME');
+		iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
+		iframe.src = '/manifest.html';
+		iframe.id = 'appcacheloader';
+		document.body.appendChild(iframe);
+		if(console) console.log("iframe added");
+	}
+
+	// Note that the iframe is inserted on page load - not turbolinks load - so it's loaded exactly once.
+	$(document).ready(addAppCacheIframe);
 })(jQuery); // end of jQuery name space
 
