@@ -12,6 +12,7 @@ https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/fonts/roboto/Roboto-Li
 /js/turbo-react.min.js
 /js/turbolinks.min.js
 /offline.html
+/shell.html
 #IFLOGGEDIN /genbc.do?type=ean-13&msg=${CURRENTUSERID}
 #IFLOGGEDIN /user/loyalty.jsp
 
