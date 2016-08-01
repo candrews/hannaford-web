@@ -4,6 +4,18 @@
 	<!-- No user should ever see this file -->
 	<!-- http://labs.ft.com/2012/11/using-an-iframe-to-stop-app-cache-storing-masters/ -->
     <title>Manifest</title>
+    <script type="text/javascript">
+	    function onUpdateReady() {
+	    	alert('The site has been updated, about to refresh');
+	    	window.applicationCache.swapCache();
+	    }
+	
+	    window.applicationCache.addEventListener('updateready', onUpdateReady);
+	
+	    if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+	    	onUpdateReady();
+	    }
+    </script>
 </head>
 <body>
 </body>
