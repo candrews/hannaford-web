@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.integralblue.hannaford.web.exception.NoSearchResultsFoundException;
+import com.integralblue.hannaford.web.exception.StoreRequiredException;
+import com.integralblue.hannaford.web.model.PageState;
 import com.integralblue.hannaford.web.model.SearchPage;
 import com.integralblue.hannaford.web.model.SearchProduct;
 import com.integralblue.hannaford.web.service.BreadcrumbParserService;
 import com.integralblue.hannaford.web.service.PageService;
+import com.integralblue.hannaford.web.service.PageStateParserService;
 import com.integralblue.hannaford.web.service.SearchPageService;
 
 @Service
@@ -20,10 +23,16 @@ public class SearchPageServiceImpl implements SearchPageService {
 	private PageService pageService;
 	@Autowired
 	private BreadcrumbParserService breadcrumbParserService;
+	@Autowired
+	private PageStateParserService pageStateParserService;
 
 	@Override
 	public SearchPage getSearchPage(String relativeUrl) throws NoSearchResultsFoundException {
 		Document document = pageService.getPage(relativeUrl);
+		PageState pageState = pageStateParserService.getPageState(document);
+    	if(pageState.getStoreInfo()==null){
+    		throw new StoreRequiredException();
+    	}
 		
 		if(document.getElementsByClass("search-result-info").size()==0){
 			throw new NoSearchResultsFoundException();
@@ -34,6 +43,7 @@ public class SearchPageServiceImpl implements SearchPageService {
     	builder.keyword(document.getElementsByClass("search-result-info").last().getElementsByTag("strong").last().text());
     	
     	builder.breadcrumbs(breadcrumbParserService.getBreadcrumbs(document));
+    	builder.pageState(pageState);
     	
     	for(Element productCell : document.getElementsByClass("productDisplayTable")){
     		builder.searchProduct(

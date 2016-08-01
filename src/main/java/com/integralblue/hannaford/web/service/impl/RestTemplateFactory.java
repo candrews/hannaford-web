@@ -1,11 +1,17 @@
 package com.integralblue.hannaford.web.service.impl;
 
 import java.io.IOException;
+import java.net.HttpCookie;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -13,24 +19,54 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import com.integralblue.hannaford.web.property.ProxyProperties;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.WebUtils;
 
 @Component
 public class RestTemplateFactory implements FactoryBean<RestTemplate>, InitializingBean {
 	
+	private static final List<String> PROXY_COOKIE_NAMES = Arrays.asList("PIPELINE_SESSION_ID","USER_SESSION_VALIDATE_COOKIE","HFD-LoadBalance","JSESSIONID","f5avrbbbbbbbbbbbbbbbb","SECURE_SESSION_ID");
+	
     private RestTemplate restTemplate;
     
-    private static class Interceptor implements ClientHttpRequestInterceptor {
+    private class Interceptor implements ClientHttpRequestInterceptor {
 
         @Override
         public ClientHttpResponse intercept(
                 HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
                 throws IOException {
-
-            HttpHeaders headers = request.getHeaders();
-            headers.add(HttpHeaders.COOKIE, "TS0122583e=015c807ca72a4d06a1efe857d3bf7d06674c11ca3a589d174d37a2d908efc80542ab6cd3a042d8b5e07d8b4dee5a2b57b8c781c7b691a1112d37cbc2b4008c7ac8d2f217fff1a37923933414025ae25dedc10f09d32cd2f9375fbd7e3f08356a8d2f31df9784bcd1301eb3666c17e59d566414eea2; fsr.s={\"f\":1468264637890,\"rid\":\"d028012-57583119-0c28-8baf-dcae3\",\"ru\":\"http://www.hannaford.com/custserv/locate_store.cmd\",\"r\":\"www.hannaford.com\",\"st\":\"\",\"to\":4.1,\"v\":-2,\"c\":\"http://www.hannaford.com/custserv/locate_store.cmd\",\"pv\":6,\"lc\":{\"d0\":{\"v\":6,\"s\":true}}}; PIPELINE_SESSION_ID=caff90337b77479480ff96587ffb3db3; JSESSIONID=DDAD2CFB7705FC0BA55231D6A9A398A3; HFD-LoadBalance=!XDeJGb9AVdwHiZKbiGzL8paiCpVwVP2gLvxHSWIzpyl9Bf5n0TF1a4OznH8+hJD1ChBuWUdYYBqH1+g=; __utma=233378055.93321936.1468264582.1468264582.1468264582.1; __utmb=233378055.12.9.1468264636324; __utmc=233378055; __utmz=233378055.1468264582.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; _fsrSR=%7B%7D");
-            return execution.execute(request, body);
+        	if(request.getURI().getPath().endsWith(".cmd") || request.getURI().getPath().endsWith(".jsp") || request.getURI().getPath().equals("/")){
+	        	HttpServletRequest servletRequest = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+	            HttpHeaders headers = request.getHeaders();
+	        	for(String proxyCookieName : PROXY_COOKIE_NAMES){
+	            	Cookie proxyCookie = WebUtils.getCookie(servletRequest, proxyCookieName);
+	                if(proxyCookie!=null){
+	                	if(headers.get(HttpHeaders.COOKIE)==null){
+	                		headers.set(HttpHeaders.COOKIE, proxyCookie.getName() + "=" + proxyCookie.getValue());
+	                	}else{
+	                		headers.set(HttpHeaders.COOKIE, headers.get(HttpHeaders.COOKIE).get(0) + "; " + proxyCookie.getName() + "=" + proxyCookie.getValue());
+	                	}
+	                }
+	        	}
+	            ClientHttpResponse response = execution.execute(request, body);
+	            HttpServletResponse servletResponse = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
+	            List<String> cookieHeaders = response.getHeaders().get(HttpHeaders.SET_COOKIE);
+	            if(cookieHeaders!=null){
+	            	for(String cookieHeader : cookieHeaders){
+	            		for(HttpCookie cookie : HttpCookie.parse(cookieHeader)){
+	            			if(PROXY_COOKIE_NAMES.contains(cookie.getName())){
+	            				Cookie responseCookie = new Cookie(cookie.getName(),cookie.getValue());
+	            				responseCookie.setPath("/");
+	            				servletResponse.addCookie(responseCookie);
+	            			}
+	            		}
+	            	}
+	            }
+	            return response;
+        	}else{
+        		return execution.execute(request, body);
+        	}
         }
     }
  
@@ -48,4 +84,5 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate>, Initializ
         restTemplate = new RestTemplate();
         restTemplate.setInterceptors(Collections.singletonList(new Interceptor()));
     }
+    
 }

@@ -20,4 +20,7 @@ public class SearchPage implements Page {
 	@NonNull
 	@Singular
 	ImmutableList<Breadcrumb> breadcrumbs;
+	
+	@NonNull
+	PageState pageState;
 }

@@ -19,5 +19,8 @@ public class ContentPage implements Page {
 	@NonNull
 	@Singular
 	ImmutableList<Breadcrumb> breadcrumbs;
+	
+	@NonNull
+	PageState pageState;
 
 }

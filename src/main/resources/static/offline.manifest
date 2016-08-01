@@ -1,9 +1,19 @@
 CACHE MANIFEST
+https://fonts.googleapis.com/icon?family=Material+Icons
+https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css
+https://code.jquery.com/jquery-2.1.1.min.js
+https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js
+/assets/hf/assets/images/common/logo.png
+https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/fonts/roboto/Roboto-Regular.woff2
+https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2
+https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/fonts/roboto/Roboto-Light.woff2
 /css/main.css
 /js/main.js
 /js/turbo-react.min.js
 /js/turbolinks.min.js
 /offline.html
+#IFLOGGEDIN /genbc.do?type=ean-13&msg=${CURRENTUSERID}
+#IFLOGGEDIN /user/loyalty.jsp
 
 NETWORK:
 *
@@ -12,3 +22,5 @@ NETWORK:
 #/product/ /offline.html
 #/catalog/ /offline.html
 #/content.jsp /offline.html
+
+# Current user: ${CURRENTUSERID}

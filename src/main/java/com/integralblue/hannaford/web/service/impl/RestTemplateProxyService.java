@@ -23,4 +23,9 @@ public class RestTemplateProxyService implements ProxyService {
 		return restTemplate.getForEntity(proxyProperties.getBaseUrl() + relativeUrl, clazz);
 	}
 
+	@Override
+	public <T> ResponseEntity<T> postForEntity(String relativeUrl, Object object, Class<T> clazz) throws RestClientException {
+		return restTemplate.postForEntity(proxyProperties.getBaseUrl() + relativeUrl, object, clazz);
+	}
+
 }

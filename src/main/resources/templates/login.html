@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+    <title>Login</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<h1>Login</h1>
+    	<form action="/user/login.cmd" method="POST">
+    		<label for="email">Email: </label><input id="email" type="email" name="userName" /><br />
+    		<label for="password">Password: </label><input id="password" type="password" name="password" />
+    		<input name="dest" th:value="${dest}" type="hidden">
+    		<input type="submit" value="Login" />
+    	</form>
+    </section>
+</body>
+</html>

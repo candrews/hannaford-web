@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+    <title>My Loyalty</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<h1>My Loyalty</h1>
+    	<img th:src="${'/genbc.do?type=ean-13&amp;msg=' + pageState.userInfo.id}" th:alt="${pageState.userInfo.id}" />
+    </section>
+</body>
+</html>

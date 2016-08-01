@@ -16,4 +16,7 @@ public class ProductPage implements Page {
 	@NonNull
 	@Singular
 	ImmutableList<Breadcrumb> breadcrumbs;
+	
+	@NonNull
+	PageState pageState;
 }

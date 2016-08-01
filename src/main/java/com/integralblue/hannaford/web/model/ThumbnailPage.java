@@ -24,4 +24,7 @@ public class ThumbnailPage implements Page {
 	int currentPage;
 	
 	int pageSize;
+	
+	@NonNull
+	PageState pageState;
 }

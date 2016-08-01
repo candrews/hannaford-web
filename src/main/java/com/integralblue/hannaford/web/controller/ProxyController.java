@@ -1,8 +1,11 @@
 package com.integralblue.hannaford.web.controller;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +47,16 @@ public class ProxyController {
 	@Autowired
 	private SearchPageService searchPageService;
 	
-    @RequestMapping(method=RequestMethod.GET, value={"/assets/**"})
+    @RequestMapping(method=RequestMethod.GET, value={"/assets/**","genbc.do"})
     public ResponseEntity<byte[]> assets(HttpServletRequest request) {
     	String relativeUrl = getRelativeUrlWithQueryString(request);
     	ResponseEntity<byte[]> entity = getEntityReturnEntityOnError(relativeUrl, byte[].class);
     	MediaType contentType = entity.getHeaders().getContentType();
-    	ResponseEntity<byte[]> ret = ResponseEntity.status(entity.getStatusCode()).header(HttpHeaders.CONTENT_TYPE, contentType.toString()).body(entity.getBody());
+    	ResponseEntity<byte[]> ret = ResponseEntity
+    			.status(entity.getStatusCode())
+    			.header(HttpHeaders.CONTENT_TYPE, contentType.toString())
+    			.header(HttpHeaders.CACHE_CONTROL, CacheControl.maxAge(364, TimeUnit.DAYS).cachePublic().getHeaderValue())
+    			.body(entity.getBody());
     	return ret;
     }
 
@@ -59,6 +66,7 @@ public class ProxyController {
     	BrowseProductPage browseProductPage = browseProductPageService.getBrowseProductPage(relativeUrl);
     	model.addAttribute("browseProductPage",browseProductPage);
     	model.addAttribute("breadcrumbs",browseProductPage.getBreadcrumbs());
+    	model.addAttribute("pageState",browseProductPage.getPageState());
     	return "browseProduct";
     }
 
@@ -69,6 +77,7 @@ public class ProxyController {
     		SearchPage searchPage = searchPageService.getSearchPage(relativeUrl);
         	model.addAttribute("searchPage",searchPage);
         	model.addAttribute("breadcrumbs",searchPage.getBreadcrumbs());
+        	model.addAttribute("pageState",searchPage.getPageState());
         	return "search";
     	}catch(NoSearchResultsFoundException e){
         	model.addAttribute("breadcrumbs",ImmutableList.<Breadcrumb>builder()
@@ -87,6 +96,7 @@ public class ProxyController {
     	ThumbnailPage thumbnailPage = thumbnailPageService.getThumbnailPage(relativeUrl);
     	model.addAttribute("thumbnailPage",thumbnailPage);
     	model.addAttribute("breadcrumbs",thumbnailPage.getBreadcrumbs());
+    	model.addAttribute("pageState",thumbnailPage.getPageState());
     	return "thumbnail";
     }
 
@@ -96,6 +106,7 @@ public class ProxyController {
     	ProductPage productPage = productPageService.getProductPage(relativeUrl);
     	model.addAttribute("productPage",productPage);
     	model.addAttribute("breadcrumbs",productPage.getBreadcrumbs());
+    	model.addAttribute("pageState",productPage.getPageState());
     	return "product";
     }
     
@@ -105,6 +116,7 @@ public class ProxyController {
     	ContentPage contentPage = contentPageService.getContentPage(relativeUrl);
     	model.addAttribute("contentPage",contentPage);
     	model.addAttribute("breadcrumbs",contentPage.getBreadcrumbs());
+    	model.addAttribute("pageState",contentPage.getPageState());
         return "content";
     }
     
@@ -113,6 +125,7 @@ public class ProxyController {
     	ContentPage contentPage = contentPageService.getHomePage();
     	model.addAttribute("contentPage",contentPage);
     	model.addAttribute("breadcrumbs",contentPage.getBreadcrumbs());
+    	model.addAttribute("pageState",contentPage.getPageState());
         return "content";
     }
     

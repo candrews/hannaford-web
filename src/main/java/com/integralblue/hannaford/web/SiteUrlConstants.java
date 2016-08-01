@@ -6,6 +6,9 @@ public interface SiteUrlConstants {
 	public static final String GIFT_CARDS="/content.jsp?pageName=GiftCard&leftNavArea=GiftCardLeftNav";
 	public static final String TO_GO="/content.jsp?pageName=HannafordToGo&leftNavArea=ShopLeftNav";
 	public static final String LOGIN="/user/login.jsp";
+	public static final String LOGOUT="/user/logout.cmd";
+	public static final String MY_LOYALTY="/user/loyalty.jsp";
+	public static final String MY_ACCOUNT="/user/main.jsp";
 	public static final String CART="/checkout/basket.jsp";
 	public static final String SEARCH="/catalog/search.cmd";
 	public static final String BROWSE_PRODUCTS="/catalog/browse_products.cmd";

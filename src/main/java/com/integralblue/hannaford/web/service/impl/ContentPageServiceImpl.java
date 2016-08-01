@@ -10,6 +10,7 @@ import com.integralblue.hannaford.web.model.ContentPage;
 import com.integralblue.hannaford.web.service.BreadcrumbParserService;
 import com.integralblue.hannaford.web.service.ContentPageService;
 import com.integralblue.hannaford.web.service.PageService;
+import com.integralblue.hannaford.web.service.PageStateParserService;
 
 @Service
 public class ContentPageServiceImpl implements ContentPageService {
@@ -17,6 +18,8 @@ public class ContentPageServiceImpl implements ContentPageService {
 	private PageService pageService;
 	@Autowired
 	private BreadcrumbParserService breadcrumbParserService;
+	@Autowired
+	private PageStateParserService pageStateParserService;
 
 	@Override
 	public ContentPage getContentPage(String relativeUrl) throws RestClientException {
@@ -26,6 +29,7 @@ public class ContentPageServiceImpl implements ContentPageService {
     			.title(document.title().replaceAll("\\| Hannaford", "").trim())
     			.htmlContent(document.getElementById("pageContentWrapperInner").outerHtml())
     			.breadcrumbs(breadcrumbParserService.getBreadcrumbs(document))
+    	    	.pageState(pageStateParserService.getPageState(document))
     			.build();
 	}
 
@@ -37,6 +41,7 @@ public class ContentPageServiceImpl implements ContentPageService {
     			.title("Supermarket, Grocery, Coupons, Pharmacy, & Recipes")
     			.htmlContent(document.getElementById("pageContentWrapperInner").outerHtml())
     			.breadcrumb(Breadcrumb.builder().name("Home").href("/").build())
+    	    	.pageState(pageStateParserService.getPageState(document))
     			.build();
 	}
 
