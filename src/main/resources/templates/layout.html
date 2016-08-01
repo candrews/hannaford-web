@@ -9,6 +9,9 @@
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" data-turbolinks-track="reload"/>
     
+    <!-- Ensure that the page will reload when the user logs in or logs out -->
+    <meta name="current-user-id" th:if="${pageState.userInfo!=null}" th:content="${pageState.userInfo.id}" data-turbolinks-track="reload" />
+    
     <script type="text/javascript">
     	if(navigator.userAgent.indexOf("HannafordAndroid/")>0){
     		//document.documentElement.className += ' native-app android-app';
