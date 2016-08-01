@@ -1,4 +1,10 @@
 (function($){
+	Turbolinks.Location.prototype.isHTML = function() {
+		  var extension = this.getExtension();
+		  return extension === ".html" ||
+		    extension === ".cmd" ||
+		    extension === ".jsp";
+		}
 	var quaggaRunning = false;
 	$(document).on('turbolinks:load', function() {
 		if(! $(document.documentElement).hasClass("native-app")){
