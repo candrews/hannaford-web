@@ -8,6 +8,11 @@
 <body>
 	<section layout:fragment="content">
 		<!-- Just an empty shell -->
+		<script type="text/javascript">
+			if(location.hash){
+				Turbolinks.visit(location.hash.substr(1), { action: "replace" });
+			}
+		</script>
     </section>
 </body>
 </html>
