@@ -6,8 +6,12 @@
     <title>Manifest</title>
     <script type="text/javascript">
 	    function onUpdateReady() {
-	    	alert('The site has been updated, about to refresh');
-	    	window.applicationCache.swapCache();
+	    	console.log('The site has been updated, about to refresh');
+	    	if(window.parent){
+	    		window.parent.location.reload(true);
+	    	}else{
+	    		location.reload(true);
+	    	}
 	    }
 	
 	    window.applicationCache.addEventListener('updateready', onUpdateReady);
