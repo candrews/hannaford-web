@@ -19,8 +19,9 @@
 	    if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
 	    	onUpdateReady();
 	    }
-	    
-	    window.applicationCache.update();
+	    if (window.applicationCache.status > 0){
+	    	window.applicationCache.update();
+	    }
     </script>
 </head>
 <body>
