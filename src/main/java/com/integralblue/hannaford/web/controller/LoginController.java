@@ -27,12 +27,12 @@ public class LoginController {
 	private PageStateParserService pageStateParserService;
 	
 	@RequestMapping(method=RequestMethod.GET,value={"user/login.jsp","/user/login.cmd"})
-	public String getLogin(Model model, @RequestParam(required=false) String dest, HttpServletResponse response){
+	public String getLogin(Model model, @RequestParam(required=false, defaultValue=SiteUrlConstants.MY_ACCOUNT) String dest, HttpServletResponse response){
 		Document document = pageService.getPage(SiteUrlConstants.LOGIN);
 		PageState pageState = pageStateParserService.getPageState(document);
 		if(pageState.getUserInfo()==null){
 	    	model.addAttribute("pageState",pageState);
-	    	model.addAttribute("dest",dest==null?SiteUrlConstants.MY_ACCOUNT:dest);
+	    	model.addAttribute("dest",dest);
 			return "login";
 		}else{
 			response.setHeader("Turbolinks-Location", dest);
