@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import com.integralblue.hannaford.web.exception.NoSearchResultsFoundException;
 import com.integralblue.hannaford.web.model.Breadcrumb;
 import com.integralblue.hannaford.web.model.BrowseProductPage;
 import com.integralblue.hannaford.web.model.ContentPage;
+import com.integralblue.hannaford.web.model.PageState;
 import com.integralblue.hannaford.web.model.ProductPage;
 import com.integralblue.hannaford.web.model.SearchPage;
 import com.integralblue.hannaford.web.model.ThumbnailPage;
@@ -131,12 +133,9 @@ public class ProxyController {
     
     @RequestMapping(method=RequestMethod.GET, value={SiteUrlConstants.CAMERA})
     public String camera(HttpServletRequest request, Model model) {
-    	model.addAttribute("breadcrumbs",ImmutableList.<Breadcrumb>builder()
-    			.add(Breadcrumb.builder()
-    					.href("/")
-    					.name("Home")
-    					.build())
-    			.build());
+    	ContentPage contentPage = contentPageService.getHomePage();
+    	model.addAttribute("pageState",contentPage.getPageState());
+    	model.addAttribute("breadcrumbs",contentPage.getBreadcrumbs());
         return "camera";
     }
     
